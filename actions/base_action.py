@@ -9,18 +9,9 @@ from facialPalsy.core.geometry_utils import *
 class BaseAction(ABC):
     """动作基类"""
 
-    def __init__(self, action_name, action_config):
-        """
-        初始化
-
-        Args:
-            action_name: 动作名称（英文）
-            action_config: 动作配置字典
-        """
-        self.action_name = action_name
-        self.action_config = action_config
-        self.action_id = action_config['action_id']
-        self.name_cn = action_config['name_cn']
+    def __init__(self):
+        """初始化 - 不需要任何参数"""
+        pass
 
     @abstractmethod
     def detect_peak_frame(self, landmarks_seq, w, h):
@@ -174,4 +165,4 @@ class BaseAction(ABC):
         }
 
     def __str__(self):
-        return f"{self.action_name} ({self.name_cn})"
+        return f"{self.__class__.__name__}"

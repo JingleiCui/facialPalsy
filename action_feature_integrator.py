@@ -3,7 +3,6 @@
 将动作特定的原始指标转换为统一的特征向量
 """
 import numpy as np
-from facialPalsy.config import ACTION_CONFIG
 
 # 导入所有动作类
 from facialPalsy.actions.neutral_face import NeutralFaceAction
@@ -31,26 +30,20 @@ class ActionFeatureIntegrator:
 
     def __init__(self):
         """初始化11个动作检测器"""
-        # 动作类映射
-        action_classes = {
-            'NeutralFace': NeutralFaceAction,
-            'SpontaneousEyeBlink': SpontaneousEyeBlinkAction,
-            'VoluntaryEyeBlink': VoluntaryEyeBlinkAction,
-            'CloseEyeSoftly': CloseEyeSoftlyAction,
-            'CloseEyeHardly': CloseEyeHardlyAction,
-            'RaiseEyebrow': RaiseEyebrowAction,
-            'Smile': SmileAction,
-            'ShrugNose': ShrugNoseAction,
-            'ShowTeeth': ShowTeethAction,
-            'BlowCheek': BlowCheekAction,
-            'LipPucker': LipPuckerAction,
+        # 直接创建动作实例 - 不需要任何参数
+        self.action_detectors = {
+            'NeutralFace': NeutralFaceAction(),
+            'SpontaneousEyeBlink': SpontaneousEyeBlinkAction(),
+            'VoluntaryEyeBlink': VoluntaryEyeBlinkAction(),
+            'CloseEyeSoftly': CloseEyeSoftlyAction(),
+            'CloseEyeHardly': CloseEyeHardlyAction(),
+            'RaiseEyebrow': RaiseEyebrowAction(),
+            'Smile': SmileAction(),
+            'ShrugNose': ShrugNoseAction(),
+            'ShowTeeth': ShowTeethAction(),
+            'BlowCheek': BlowCheekAction(),
+            'LipPucker': LipPuckerAction(),
         }
-
-        # 使用 ACTION_CONFIG 创建动作实例
-        self.action_detectors = {}
-        for action_name, action_class in action_classes.items():
-            action_config = ACTION_CONFIG[action_name]
-            self.action_detectors[action_name] = action_class(action_name, action_config)
 
         # 每个动作的关键指标定义
         self.action_key_indicators = self._define_key_indicators()
